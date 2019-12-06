@@ -72,8 +72,9 @@ class App extends React.Component {
       // The whole response has been received. Print out the result.
       res.on("end", () => {
         //console.log(data);
-        console.log(JSON.parse(data.toString()));
+        //console.log(JSON.parse(data.toString()));
         var list = JSON.parse(data.toString());
+        console.log(list.comments);
         this.setState(() => ({
           comments: list.comments
         }));
@@ -276,7 +277,7 @@ class App extends React.Component {
           {comments.map(comment => (
             <tr key={comment._id}>
               <td>
-                <h5>{comment.movie}</h5>
+                <h5>{comment.movie.name}</h5>
                 <p>{comment.text} | </p>
               </td>
               <td className="align-middle">
