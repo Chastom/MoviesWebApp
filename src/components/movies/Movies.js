@@ -47,6 +47,7 @@ export default class Movie extends React.Component {
       <ListGroup className="container">
         {movies.map(movie => (
           <ListGroup.Item
+            className="movieRow"
             key={movie._id}
             onClick={() => this.modalOpen(movie._id)}
           >

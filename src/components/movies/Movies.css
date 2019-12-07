@@ -5,3 +5,8 @@
   margin: auto;
   height: 100%;
 }
+
+.movieRow:hover {
+  background-color: #fff2e6;
+  cursor: pointer;
+}

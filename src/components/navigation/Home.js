@@ -6,7 +6,6 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <p>Movies</p>
         <Movies />
       </div>
     );
