@@ -2,6 +2,10 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 import "./Navigation.css";
 
+const styles = {
+  transition: "all 1s ease-out"
+};
+
 class Signup extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -9,7 +13,9 @@ class Signup extends React.Component {
     this.state = {
       email: "",
       password: "",
-      password2: ""
+      password2: "",
+      scale: 20,
+      errorText: "Oops, something went wrong!"
     };
   }
 
@@ -36,9 +42,58 @@ class Signup extends React.Component {
     });
   }
 
+  onScale(error) {
+    console.log("scalled up");
+    this.setState({
+      scale: this.state.scale < 10 ? 80 : 0,
+      errorText: error
+    });
+  }
+
+  async handleClick(e) {
+    try {
+      const data = await this.postData("http://localhost:4000/user/signup", {
+        email: this.state.email,
+        password: this.state.password
+      });
+      this.onScale("Succesfully created!");
+      console.log(JSON.stringify(data));
+    } catch (error) {
+      console.log("errror catch");
+      this.onScale();
+      //styles.transition = "all 2s ease-in-out";
+      //styles.height = "400px";
+      console.error(error);
+    }
+  }
+
+  async postData(url = "", data = {}) {
+    const response = await fetch(url, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      redirect: "follow",
+      referrer: "no-referrer",
+      body: JSON.stringify(data)
+    });
+    return await response.json();
+  }
+
   render() {
+    console.log(this.state.scale);
     return (
       <div>
+        <div
+          id="box"
+          style={{ ...styles, height: this.state.scale }}
+          onClick={e => this.onScale("")}
+        >
+          {this.state.errorText}
+        </div>
         <Form className="login-form">
           <h2 className="text-center">Register</h2>
           <Form.Group>
@@ -65,6 +120,7 @@ class Signup extends React.Component {
             ></Form.Control>
           </Form.Group>
           <Button
+            onClick={e => this.handleClick(e)}
             className="btn-lg btn-dark btn-block"
             disabled={!this.validateForm()}
           >
