@@ -2,23 +2,31 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 import "./Navigation.css";
 
-class Login extends React.Component {
+class Signup extends React.Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      password2: ""
     };
   }
 
   validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
+    const { email, password, password2 } = this.state;
+    return email.length > 0 && password.length > 0 && password2.length > 0;
   }
 
   setPassword(pass) {
     this.setState({
       password: pass
+    });
+  }
+
+  setPassword2(pass) {
+    this.setState({
+      password2: pass
     });
   }
 
@@ -32,7 +40,7 @@ class Login extends React.Component {
     return (
       <div>
         <Form className="login-form">
-          <h2 className="text-center">Welcome</h2>
+          <h2 className="text-center">Register</h2>
           <Form.Group>
             <Form.Label>Email</Form.Label>
             <Form.Control
@@ -49,6 +57,13 @@ class Login extends React.Component {
               onChange={e => this.setPassword(e.target.value)}
             ></Form.Control>
           </Form.Group>
+          <Form.Group>
+            <Form.Control
+              type="password"
+              placeholder="Confirm password"
+              onChange={e => this.setPassword2(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
           <Button
             className="btn-lg btn-dark btn-block"
             disabled={!this.validateForm()}
@@ -57,8 +72,8 @@ class Login extends React.Component {
           </Button>
           <br></br>
           <div className="text-center">
-            Have no account?
-            <a href="signup"> Sign up</a>
+            Already registered?
+            <a href="login"> Login</a>
           </div>
         </Form>
       </div>
@@ -66,4 +81,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default Signup;
