@@ -4,6 +4,7 @@ import "./Navigation.css";
 
 const styles = {
   transition: "all 1s ease-out"
+  //transition: "all 2s ease-in-out"
 };
 
 class Signup extends React.Component {
@@ -14,8 +15,8 @@ class Signup extends React.Component {
       email: "",
       password: "",
       password2: "",
-      scale: 20,
-      errorText: "Oops, something went wrong!"
+      messageText: "",
+      notifyType: ""
     };
   }
 
@@ -42,27 +43,42 @@ class Signup extends React.Component {
     });
   }
 
-  onScale(error) {
-    console.log("scalled up");
+  onNotify(message, type) {
     this.setState({
-      scale: this.state.scale < 10 ? 80 : 0,
-      errorText: error
+      messageText: message,
+      notifyType: type
     });
   }
 
   async handleClick(e) {
+    if (this.state.password !== this.state.password2) {
+      this.onNotify(
+        "Please enter the same password in both fields!",
+        "error-box"
+      );
+      return;
+    }
     try {
       const data = await this.postData("http://localhost:4000/user/signup", {
         email: this.state.email,
         password: this.state.password
       });
-      this.onScale("Succesfully created!");
-      console.log(JSON.stringify(data));
+      if (data.status === 409) {
+        this.onNotify("User with this mail already exists!", "error-box");
+      } else if (data.status === 500) {
+        this.onNotify("Please enter a valid email address!", "error-box");
+      } else if (data.status === 201) {
+        this.onNotify("Registration was successful!", "success-box");
+        console.log(JSON.stringify(data.response));
+      } else {
+        this.onNotify(
+          "An error has occured, please try again later...",
+          "error-box"
+        );
+      }
     } catch (error) {
       console.log("errror catch");
-      this.onScale();
-      //styles.transition = "all 2s ease-in-out";
-      //styles.height = "400px";
+      this.onNotify(error);
       console.error(error);
     }
   }
@@ -80,19 +96,23 @@ class Signup extends React.Component {
       referrer: "no-referrer",
       body: JSON.stringify(data)
     });
-    return await response.json();
+    var status = response.status;
+    var res = await response.json();
+    return {
+      status: status,
+      response: res
+    };
   }
 
   render() {
-    console.log(this.state.scale);
     return (
       <div>
         <div
-          id="box"
-          style={{ ...styles, height: this.state.scale }}
-          onClick={e => this.onScale("")}
+          id={this.state.messageText ? this.state.notifyType : "box"}
+          style={{ ...styles }}
+          onClick={e => this.onNotify("", "box")}
         >
-          {this.state.errorText}
+          {this.state.messageText}
         </div>
         <Form className="login-form">
           <h2 className="text-center">Register</h2>
