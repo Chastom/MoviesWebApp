@@ -1,22 +1,66 @@
-.App {
+.text {
+  color: #424242;
+  font-family: Lato;
+  font-size: 45px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.text2 {
+  color: #424242;
+  font-family: Lato;
+  font-size: 20px;
+  text-align: center;
+  margin-top: -10px;
+}
+
+.text3 {
+  color: #424242;
+  font-family: Lato;
+  font-size: 15px;
+  text-align: center;
+  margin-top: -10px;
+  float: center;
+}
+
+#page-footer {
+  border-top: solid #a44b4b;
+  border-width: 3px;
+  background: #2e2e2e;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.main-page {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #09d3ac;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+#container {
+  min-height: 100%;
+  position: relative;
+}
+#body {
+  padding: 10px;
+  padding-bottom: 130px; /* Height of the footer */
+}
+#footer {
+  border-top: solid #a44b4b;
+  border-width: 3px;
+  background: #2e2e2e;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
 }

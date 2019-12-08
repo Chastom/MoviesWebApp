@@ -39,9 +39,29 @@
 .comments {
   padding: 5px !important;
   margin: 0% !important;
+  margin-bottom: 0.3% !important;
+}
+
+.comments-admin {
+  padding: 5px !important;
+  margin: 0% !important;
+  margin-bottom: 0.3% !important;
+}
+
+.comments-admin-div :hover {
+  background-color: #fff2e6;
+  cursor: pointer;
 }
 
 .comments p {
   padding: 0px !important;
   margin: 0% !important;
+}
+
+.comment-form {
+  width: 100%;
+  max-width: 650px;
+  padding: 15px;
+  margin: auto;
+  height: 100%;
 }
