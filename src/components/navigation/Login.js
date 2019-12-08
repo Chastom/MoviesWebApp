@@ -57,7 +57,13 @@ class Login extends React.Component {
       });
       if (data.status === 200) {
         this.onNotify("Login was successfull!", "success-box");
+        const userState = {
+          token: data.response.token,
+          role: data.response.role
+        };
+        window.sessionStorage.setItem("user_state", JSON.stringify(userState));
         var self = this;
+        this.props.hasLogged();
         setTimeout(function() {
           self.redirect();
         }, 1000);

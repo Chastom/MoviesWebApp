@@ -9,14 +9,31 @@ import Error from "./components/navigation/Error";
 import Navigation from "./components/navigation/Navigation";
 
 class App extends Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {
+      isLogged: false
+    };
+  }
+
+  hasLogged() {
+    this.setState({ isLogged: true });
+  }
+
   render() {
     return (
       <BrowserRouter>
         <div>
-          <Navigation />
+          <Navigation isLogged={this.state.isLogged} />
           <Switch>
             <Route path="/" component={Home} exact />
-            <Route path="/login" component={Login} />
+            <Route
+              path="/login"
+              render={props => (
+                <Login {...props} hasLogged={this.hasLogged.bind(this)} />
+              )}
+            />
             <Route path="/movies" component={Movies} />
             <Route path="/signup" component={Signup} />
             <Route component={Error} />
