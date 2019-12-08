@@ -30,7 +30,7 @@ export default class Users extends React.Component {
 
   render() {
     if (this.state.redirect) {
-      var redirect = "/user#" + this.state.userId;
+      var redirect = "/user/" + this.state.userId;
       return <Redirect to={redirect} />;
     }
     if (this.state.loading) {

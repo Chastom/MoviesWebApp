@@ -24,7 +24,6 @@ class App extends Component {
   }
 
   selectId(id) {
-    console.log(id);
     this.setState({ idSelected: id });
   }
 
