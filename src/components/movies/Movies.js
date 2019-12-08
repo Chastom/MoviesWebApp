@@ -1,5 +1,5 @@
 import React from "react";
-import { ListGroup, Form, Button } from "react-bootstrap";
+import { ListGroup, Form, Button, Row, Col, Container } from "react-bootstrap";
 import "./Movies.css";
 import MovieModal from "./MovieModal";
 
@@ -115,67 +115,92 @@ export default class Movie extends React.Component {
       }
       isLogged = true;
     }
+    if (isAdmin) {
+      return (
+        <Container>
+          <Row>
+            <Col>
+              <h2 className="text-center">Create a new movie</h2>
+              <Form className="">
+                <Form.Group>
+                  <Form.Label>
+                    <b>Title</b>
+                  </Form.Label>
+                  <Form.Control
+                    placeholder="Movie title"
+                    type="text"
+                    value={this.state.email}
+                    onChange={e => this.setEmail(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>
+                    <b>Rating</b>
+                  </Form.Label>
+                  <Form.Control
+                    placeholder="Value from 0 to 10"
+                    type="number"
+                    min="1"
+                    max="10"
+                    step="0.1"
+                    value={this.state.role}
+                    onChange={e => this.setRole(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+                <Button
+                  onClick={e => this.createMovie(e)}
+                  className="btn-lg btn-dark btn-block"
+                  disabled={!this.validateForm()}
+                >
+                  Create
+                </Button>
+              </Form>
+            </Col>
+            <Col xs={8}>
+              <ListGroup className="container">
+                {movies.map(movie => (
+                  <ListGroup.Item
+                    className="movieRow"
+                    key={movie._id}
+                    onClick={() => this.modalOpen(movie._id)}
+                  >
+                    <h5>{movie.name}</h5>
+                    <p>{movie.rating} Rating </p>
+                  </ListGroup.Item>
+                ))}
+                <MovieModal
+                  show={this.state.modalShow}
+                  onHide={this.modalClose}
+                  movieId={this.state.selectedMovieId}
+                  isAdmin={isAdmin}
+                  isLogged={isLogged}
+                />
+              </ListGroup>
+            </Col>
+          </Row>
+        </Container>
+      );
+    }
     return (
-      <div>
-        {isAdmin && (
-          <div>
-            <h2 className="text-center">Create a new movie</h2>
-            <Form className="login-form">
-              <Form.Group>
-                <Form.Label>
-                  <b>Title</b>
-                </Form.Label>
-                <Form.Control
-                  placeholder="Movie title"
-                  type="text"
-                  value={this.state.email}
-                  onChange={e => this.setEmail(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
-              <Form.Group>
-                <Form.Label>
-                  <b>Rating</b>
-                </Form.Label>
-                <Form.Control
-                  placeholder="Value from 0 to 10"
-                  type="number"
-                  min="1"
-                  max="10"
-                  step="0.1"
-                  value={this.state.role}
-                  onChange={e => this.setRole(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
-              <Button
-                onClick={e => this.createMovie(e)}
-                className="btn-lg btn-dark btn-block"
-                disabled={!this.validateForm()}
-              >
-                Create
-              </Button>
-            </Form>
-          </div>
-        )}
-        <ListGroup className="container">
-          {movies.map(movie => (
-            <ListGroup.Item
-              className="movieRow"
-              key={movie._id}
-              onClick={() => this.modalOpen(movie._id)}
-            >
-              <h5>{movie.name}</h5>
-              <p>{movie.rating} Rating </p>
-            </ListGroup.Item>
-          ))}
-          <MovieModal
-            show={this.state.modalShow}
-            onHide={this.modalClose}
-            movieId={this.state.selectedMovieId}
-            isAdmin={isAdmin}
-            isLogged={isLogged}
-          />
-        </ListGroup>
-      </div>
+      <ListGroup className="container">
+        {movies.map(movie => (
+          <ListGroup.Item
+            className="movieRow"
+            key={movie._id}
+            onClick={() => this.modalOpen(movie._id)}
+          >
+            <h5>{movie.name}</h5>
+            <p>{movie.rating} Rating </p>
+          </ListGroup.Item>
+        ))}
+        <MovieModal
+          show={this.state.modalShow}
+          onHide={this.modalClose}
+          movieId={this.state.selectedMovieId}
+          isAdmin={isAdmin}
+          isLogged={isLogged}
+        />
+      </ListGroup>
     );
   }
 }
