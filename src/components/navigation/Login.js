@@ -1,6 +1,11 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 import "./Navigation.css";
+import { Redirect } from "react-router-dom";
+
+const styles = {
+  transition: "all 1s ease-out"
+};
 
 class Login extends React.Component {
   constructor(props, context) {
@@ -8,7 +13,10 @@ class Login extends React.Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      messageText: "",
+      notifyType: "",
+      redirect: false
     };
   }
 
@@ -28,9 +36,78 @@ class Login extends React.Component {
     });
   }
 
+  onNotify(message, type) {
+    this.setState({
+      messageText: message,
+      notifyType: type
+    });
+  }
+
+  redirect() {
+    this.setState({
+      redirect: true
+    });
+  }
+
+  async handleClick(e) {
+    try {
+      const data = await this.postData("http://localhost:4000/user/login", {
+        email: this.state.email,
+        password: this.state.password
+      });
+      if (data.status === 200) {
+        this.onNotify("Login was successfull!", "success-box");
+        var self = this;
+        setTimeout(function() {
+          self.redirect();
+        }, 1000);
+      } else {
+        this.onNotify(
+          "Please make sure you have entered correct credentials!",
+          "error-box"
+        );
+      }
+    } catch (error) {
+      console.log("errror catch");
+      this.onNotify(error);
+      console.error(error);
+    }
+  }
+
+  async postData(url = "", data = {}) {
+    const response = await fetch(url, {
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      redirect: "follow",
+      referrer: "no-referrer",
+      body: JSON.stringify(data)
+    });
+    var status = response.status;
+    var res = await response.json();
+    return {
+      status: status,
+      response: res
+    };
+  }
+
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/" />;
+    }
     return (
       <div>
+        <div
+          id={this.state.messageText ? this.state.notifyType : "box"}
+          style={{ ...styles }}
+          onClick={e => this.onNotify("", "box")}
+        >
+          {this.state.messageText}
+        </div>
         <Form className="login-form">
           <h2 className="text-center">Welcome</h2>
           <Form.Group>
@@ -50,6 +127,7 @@ class Login extends React.Component {
             ></Form.Control>
           </Form.Group>
           <Button
+            onClick={e => this.handleClick(e)}
             className="btn-lg btn-dark btn-block"
             disabled={!this.validateForm()}
           >

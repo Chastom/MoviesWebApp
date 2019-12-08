@@ -52,10 +52,7 @@ class Signup extends React.Component {
 
   async handleClick(e) {
     if (this.state.password !== this.state.password2) {
-      this.onNotify(
-        "Please enter the same password in both fields!",
-        "error-box"
-      );
+      this.onNotify("Please make sure your passwords match!", "error-box");
       return;
     }
     try {
