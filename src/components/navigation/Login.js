@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
-import "./Navigation.css";
 import { Redirect } from "react-router-dom";
+import "./Navigation.css";
 
 const styles = {
   transition: "all 1s ease-out"

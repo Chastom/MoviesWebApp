@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Users from "./components/users/Users";
+import User from "./components/users/User";
 import Home from "./components/navigation/Home";
 import Login from "./components/navigation/Login";
 import Signup from "./components/navigation/Signup";
@@ -13,12 +14,18 @@ class App extends Component {
     super(props, context);
 
     this.state = {
-      isLogged: false
+      isLogged: false,
+      idSelected: ""
     };
   }
 
   hasLogged() {
     this.setState({ isLogged: true });
+  }
+
+  selectId(id) {
+    console.log(id);
+    this.setState({ idSelected: id });
   }
 
   componentDidMount() {
@@ -41,7 +48,18 @@ class App extends Component {
                 <Login {...props} hasLogged={this.hasLogged.bind(this)} />
               )}
             />
-            <Route path="/users" component={Users} />
+            <Route
+              path="/users"
+              render={props => (
+                <Users {...props} selectId={this.selectId.bind(this)} />
+              )}
+            />
+            <Route
+              path="/user"
+              render={props => (
+                <User {...props} userId={this.state.idSelected} />
+              )}
+            />
             <Route path="/signup" component={Signup} />
             <Route component={Error} />
           </Switch>

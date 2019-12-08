@@ -1,12 +1,15 @@
 import React from "react";
 import { ListGroup } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 
-export default class Movie extends React.Component {
+export default class Users extends React.Component {
   state = {
     loading: true,
     users: null,
     modalShow: false,
-    selectedUserId: null
+    selectedUserId: null,
+    redirect: false,
+    userId: ""
   };
 
   async componentDidMount() {
@@ -20,7 +23,16 @@ export default class Movie extends React.Component {
     this.setState({ users: list.users, loading: false });
   }
 
+  redirectToUser(id) {
+    this.setState({ userId: id, redirect: true });
+    this.props.selectId(id);
+  }
+
   render() {
+    if (this.state.redirect) {
+      var redirect = "/user#" + this.state.userId;
+      return <Redirect to={redirect} />;
+    }
     if (this.state.loading) {
       return <div>loading...</div>;
     }
@@ -38,7 +50,7 @@ export default class Movie extends React.Component {
           <ListGroup.Item
             className="movieRow"
             key={user._id}
-            //onClick={() => this.modalOpen(movie._id)}
+            onClick={() => this.redirectToUser(user._id)}
           >
             <h5>{user.email}</h5>
             <p>Role: {user.role} </p>
