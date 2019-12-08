@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Users from "./components/users/Users";
 import User from "./components/users/User";
+import Movie from "./components/movies/Movie";
 import Home from "./components/navigation/Home";
 import Login from "./components/navigation/Login";
 import Signup from "./components/navigation/Signup";
@@ -59,6 +60,7 @@ class App extends Component {
                 <User {...props} userId={this.state.idSelected} />
               )}
             />
+            <Route path="/movie" component={Movie} />
             <Route path="/signup" component={Signup} />
             <Route component={Error} />
           </Switch>

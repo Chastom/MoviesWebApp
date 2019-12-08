@@ -10,3 +10,38 @@
   background-color: #fff2e6;
   cursor: pointer;
 }
+
+.comment-section {
+  margin-top: -10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+  height: 85px;
+}
+
+@media only screen and (max-width: 980px) {
+  .comment-section {
+    width: 92% !important;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .comment-section {
+    width: 87% !important;
+  }
+}
+
+.comment-info {
+  padding-left: 20px;
+}
+
+.comments {
+  padding: 5px !important;
+  margin: 0% !important;
+}
+
+.comments p {
+  padding: 0px !important;
+  margin: 0% !important;
+}

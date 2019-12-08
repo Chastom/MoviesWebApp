@@ -6,7 +6,7 @@ const styles = {
   transition: "all 1s ease-out"
 };
 
-export default class User extends React.Component {
+export default class Movie extends React.Component {
   state = {
     loading: true,
     user: null,
@@ -17,23 +17,22 @@ export default class User extends React.Component {
   };
 
   async componentDidMount() {
-    console.log("user mounted");
     let currentUrl = window.location.pathname.split("/");
     let headers = { "Content-Type": "application/json" };
     const savedState = JSON.parse(window.sessionStorage.getItem("user_state"));
     headers["Authorization"] = `Bearer ${savedState.token}`;
-    const url = "http://localhost:4000/user/" + currentUrl[2];
+    const url = "http://localhost:4000/movies/" + currentUrl[2];
     const response = await fetch(url, { headers });
     const list = await response.json();
     if (response.status === 200) {
       this.setState({
-        user: list.user,
+        user: list.movie,
         loading: false,
-        email: list.user.email,
-        role: list.user.role
+        email: list.movie.name,
+        role: list.movie.rating
       });
     } else if (response.status === 404) {
-      this.setState({ loading: false, message: "User not found!" });
+      this.setState({ loading: false, message: "Movie not found!" });
     }
   }
 
@@ -45,7 +44,11 @@ export default class User extends React.Component {
   }
 
   validateForm() {
-    return this.state.email.length > 0 && this.state.role;
+    return (
+      this.state.email.length > 0 &&
+      this.state.role > 0 &&
+      this.state.role <= 10
+    );
   }
 
   setEmail(value) {
@@ -59,7 +62,7 @@ export default class User extends React.Component {
   async deleteUser() {
     try {
       let currentUrl = window.location.pathname.split("/");
-      const url = "http://localhost:4000/user/" + currentUrl[2];
+      const url = "http://localhost:4000/movies/" + currentUrl[2];
       const data = await this.apiRequest(
         url,
         {
@@ -69,7 +72,7 @@ export default class User extends React.Component {
         "DELETE"
       );
       if (data.status === 200) {
-        this.onNotify("User deleted successfully!", "success-box");
+        this.onNotify("Movie deleted successfully!", "success-box");
         setTimeout(() => {
           this.setState({ redirect: true });
         }, 1500);
@@ -86,17 +89,17 @@ export default class User extends React.Component {
   async updateUser() {
     try {
       let currentUrl = window.location.pathname.split("/");
-      const url = "http://localhost:4000/user/" + currentUrl[2];
+      const url = "http://localhost:4000/movies/" + currentUrl[2];
       const data = await this.apiRequest(
         url,
         {
-          email: this.state.email,
-          role: this.state.role
+          name: this.state.email,
+          rating: this.state.role
         },
         "PATCH"
       );
       if (data.status === 200) {
-        this.onNotify("User updated successfully!", "success-box");
+        this.onNotify("Movie updated successfully!", "success-box");
       } else {
         this.onNotify("Please enter valid data!", "error-box");
       }
@@ -131,7 +134,7 @@ export default class User extends React.Component {
 
   render() {
     if (this.state.redirect) {
-      return <Redirect to="/users" />;
+      return <Redirect to="/" />;
     }
     if (this.state.loading) {
       return <div>loading...</div>;
@@ -144,7 +147,7 @@ export default class User extends React.Component {
     }
     var user = this.state.user;
     if (user === "") {
-      return <div>there is no such user</div>;
+      return <div>there is no such movie</div>;
     }
     return (
       <div>
@@ -155,22 +158,28 @@ export default class User extends React.Component {
         >
           {this.state.messageText}
         </div>
-        <h2 className="text-center">Selected user</h2>
+        <h2 className="text-center">Selected movie</h2>
         <Form className="login-form">
           <Form.Group>
             <Form.Label>
-              <b>Email</b>
+              <b>Title</b>
             </Form.Label>
             <Form.Control
+              placeholder="Movie title"
               value={this.state.email}
               onChange={e => this.setEmail(e.target.value)}
             ></Form.Control>
           </Form.Group>
           <Form.Group>
             <Form.Label>
-              <b>Role</b>
+              <b>Rating</b>
             </Form.Label>
             <Form.Control
+              placeholder="Value from 0 to 10"
+              type="number"
+              min="1"
+              max="10"
+              step="0.1"
               value={this.state.role}
               onChange={e => this.setRole(e.target.value)}
             ></Form.Control>
