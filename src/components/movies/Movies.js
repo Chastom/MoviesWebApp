@@ -12,6 +12,7 @@ export default class Movie extends React.Component {
   };
 
   async componentDidMount() {
+    console.log("movies mounted");
     const url = "http://localhost:4000/movies";
     const response = await fetch(url);
     const list = await response.json();

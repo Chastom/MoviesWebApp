@@ -25,8 +25,8 @@ class Navigation extends Component {
                 Home
               </Nav.Link>
               {this.props.isLogged && isAdmin ? (
-                <Nav.Link as={Link} to="/movies">
-                  Movies
+                <Nav.Link as={Link} to="/users">
+                  Users
                 </Nav.Link>
               ) : (
                 ""

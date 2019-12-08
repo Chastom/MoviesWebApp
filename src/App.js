@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import Movies from "./components/movies/Movies";
+import Users from "./components/users/Users";
 import Home from "./components/navigation/Home";
 import Login from "./components/navigation/Login";
 import Signup from "./components/navigation/Signup";
@@ -21,6 +21,13 @@ class App extends Component {
     this.setState({ isLogged: true });
   }
 
+  componentDidMount() {
+    const savedState = JSON.parse(window.sessionStorage.getItem("user_state"));
+    if (savedState && !this.state.isLogged) {
+      this.hasLogged();
+    }
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -34,7 +41,7 @@ class App extends Component {
                 <Login {...props} hasLogged={this.hasLogged.bind(this)} />
               )}
             />
-            <Route path="/movies" component={Movies} />
+            <Route path="/users" component={Users} />
             <Route path="/signup" component={Signup} />
             <Route component={Error} />
           </Switch>
