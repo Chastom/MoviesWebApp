@@ -19,6 +19,7 @@
   height: 0px;
   background: rgb(255, 244, 193);
   margin: 0 auto;
+  margin-top: -10px;
   overflow: hidden;
   text-align: center;
   cursor: pointer;
@@ -31,6 +32,7 @@
   height: 80px;
   background: rgb(253, 115, 106);
   margin: 0 auto;
+  margin-top: -10px;
   overflow: hidden;
   text-align: center;
   cursor: pointer;
@@ -43,6 +45,7 @@
   height: 80px;
   background: rgba(81, 255, 154, 0.863);
   margin: 0 auto;
+  margin-top: -10px;
   overflow: hidden;
   text-align: center;
   cursor: pointer;

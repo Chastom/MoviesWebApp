@@ -75,8 +75,32 @@ class App extends Component {
           </BrowserRouter>
         </div>
         <footer id="footer">
-          <h1 className="text">KTU</h1>
-          <h2 className="text2">&copy; MOVIE KINGDOM - BY TAUTVYDAS</h2>
+          <svg height="50" width="200" className="center">
+            <linearGradient
+              id="grad1"
+              gradientUnits="userSpaceOnUse"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
+              <stop offset="10%" stopColor="#309c6f" stopOpacity="50%" />
+              <stop offset="79%" stopColor="#ffff00" stopOpacity="85%" />{" "}
+            </linearGradient>
+            <ellipse cx="100" cy="21" rx="40" ry="20" fill="url(#grad1)" />
+            <text
+              fill="#2e2e2e"
+              font-weight="bold"
+              font-size="20"
+              font-family="Verdana"
+              x="86"
+              y="27"
+            >
+              TK
+            </text>
+            Sorry, your browser does not support inline SVG.
+          </svg>
+          <h2 className="text2">&copy; MOVIE KINGDOM</h2>
           <h2 className="text3">-2019-</h2>
         </footer>
       </div>
