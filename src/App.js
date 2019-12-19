@@ -75,7 +75,7 @@ class App extends Component {
           </BrowserRouter>
         </div>
         <footer id="footer">
-          <svg height="50" width="200" className="center">
+          <svg height="52" width="200" className="center">
             <linearGradient
               id="grad1"
               gradientUnits="userSpaceOnUse"
@@ -87,7 +87,7 @@ class App extends Component {
               <stop offset="10%" stopColor="#309c6f" stopOpacity="50%" />
               <stop offset="79%" stopColor="#ffff00" stopOpacity="85%" />{" "}
             </linearGradient>
-            <ellipse cx="100" cy="21" rx="40" ry="20" fill="url(#grad1)" />
+            <ellipse cx="100" cy="21.5" rx="40" ry="20" fill="url(#grad1)" />
             <text
               fill="#2e2e2e"
               font-weight="bold"
